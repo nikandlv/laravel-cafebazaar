@@ -9,27 +9,27 @@ class CafebazaarPurchase {
         $this->data = $data;
     }
 
-    function getConsumptionState() {
+    public function getConsumptionState() {
         return $this->data['consumptionState'];
     }
 
-    function getPurchaseState() {
+    public function getPurchaseState() {
         return $this->data['purchaseState'];
     }
 
-    function getKind() {
+    public function getKind() {
         return $this->data['kind'];
     }
 
-    function getPayload() {
+    public function getPayload() {
         return $this->data['developerPayload'];
     }
 
-    function getTime() {
+    public function getTime() {
         return $this->data['purchaseTime'];
     }
 
-    function isValid() {
+    public function isValid() {
         return $this->getPurchaseState() === 0;
     }
 
