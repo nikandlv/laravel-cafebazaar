@@ -8,8 +8,12 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class LaravelCafebazaar {
+
+    protected $data;
+    protected $code;
+    protected $guzzle;
     
-    function __construct() {
+    public function __construct() {
         
         if(empty($this->code)) {  
             throw new Exception("Code not found. run php artisan Cafebazaar code");
