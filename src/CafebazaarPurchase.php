@@ -14,7 +14,7 @@ class CafebazaarPurchase {
     }
 
     function getPurchaseState() {
-        return $this->data['consumptionState'];
+        return $this->data['purchaseState'];
     }
 
     function getKind() {
@@ -30,7 +30,7 @@ class CafebazaarPurchase {
     }
 
     function isValid() {
-        return $this->data['purchaseTime'];
+        return $this->getPurchaseState() === 0;
     }
 
 }
