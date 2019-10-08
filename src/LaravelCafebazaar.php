@@ -15,7 +15,7 @@ class LaravelCafebazaar
         $this->updateToken();
     }
 
-    function updateToken() {
+    protected function updateToken() {
 
         if(empty($this->code)) {  
             throw new Exception("Code not found. run php artisan Cafebazaar code");
@@ -34,25 +34,27 @@ class LaravelCafebazaar
         }
     }
 
-    function getCache() {
+    protected function getCache() {
         return Cache::get('laravel-cafebazaar');
     }
 
-    function setCache($cache) {
+    protected function setCache($cache) {
         Cache::put('laravel-cafebazaar', $cache, 60);
     }
 
-    function getCode() {
+    protected function getCode() {
         return Cache::get('laravel-cafebazaar-code');
     }
 
-    function setCode($code) {
+    protected function setCode($code) {
         Cache::forever('laravel-cafebazaar-code', $code);
     }
     
 
     public function verifyPurchase($package_id, $product_id, $purchase_token) {
         $this->updateToken();
+        $data = $this->guzzle->get("api/validate/$package_id/inapp/$product_id/purchases/$purchase_token");
+        return new CafebazaarPurchase($data);
     }
 
     public static function handleRedirect(Request $request) {
