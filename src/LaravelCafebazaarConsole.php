@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Nikandlv\LaravelCafebazaar;
 
 use App\User;
 use App\DripEmailer;
