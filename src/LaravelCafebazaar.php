@@ -3,6 +3,7 @@
 namespace Nikandlv\LaravelCafebazaar;
 
 use Exception;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
@@ -22,15 +23,41 @@ class LaravelCafebazaar {
         }
 
         if(empty($this->data)) {
-            $response = $this->guzzle->post("auth/token", [
-                "grant_type" => 'authorization_code',
-                'code' => $this->code,
-                "client_id" => config('laravel-cafebazaar.client_id'),
-                "client_secret" => config('laravel-cafebazaar.client_secret'),
-                "redirect_uri" => config('laravel-cafebazaar.redirect_uri'),
-            ]);
-            $this->data = $response->getBody();
-            setCache($this->data);
+            try {
+                $response = $this->guzzle->post("auth/token/", [
+                    'form_params' => [
+                        "grant_type" => 'authorization_code',
+                        'code' => $this->code,
+                        "client_id" => config('laravel-cafebazaar.client_id'),
+                        "client_secret" => config('laravel-cafebazaar.client_secret'),
+                        "redirect_uri" => config('laravel-cafebazaar.redirect_uri'),    
+                   ],
+                ]);
+                $this->data = json_decode($response->getBody()->getContents());
+                $this->setCache($this->data);
+            } catch (RequestException $exception) {
+                throw $exception;
+            }
+        } else {
+            try {
+                if(!isset($this->data->refresh_token)) {
+                    return;
+                }
+                $refresh_token = $this->data->refresh_token;
+                $response = $this->guzzle->post("auth/token/", [
+                    'form_params' => [
+                        "grant_type" => 'refresh_token',
+                        "client_id" => config('laravel-cafebazaar.client_id'),
+                        "client_secret" => config('laravel-cafebazaar.client_secret'),
+                        "refresh_token" => $refresh_token
+                   ],
+                ]);
+                $this->data = json_decode($response->getBody()->getContents());
+                $this->data->refresh_token = $refresh_token;
+                $this->setCache($this->data);
+            } catch (RequestException $exception) {
+                throw $exception;
+            }
         }
     }
 
@@ -39,7 +66,7 @@ class LaravelCafebazaar {
     }
 
     protected function setCache($cache) {
-        Cache::put('laravel-cafebazaar', $cache, 60);
+        Cache::forever('laravel-cafebazaar', $cache);
     }
 
     protected function getCode() {
@@ -48,7 +75,8 @@ class LaravelCafebazaar {
     
     public function verifyPurchase($package_id, $product_id, $purchase_token) {
         $this->updateToken();
-        $data = $this->guzzle->get("api/validate/$package_id/inapp/$product_id/purchases/$purchase_token");
+        $response = $this->guzzle->get("api/validate/$package_id/inapp/$product_id/purchases/$purchase_token?access_token=".$this->data->access_token);
+        $data = json_decode($response->getBody()->getContents());
         return new CafebazaarPurchase($data);
     }
 
