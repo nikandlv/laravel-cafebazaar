@@ -9,6 +9,10 @@ Cafebazaar uses a non standard implementation of `OAuth2.0`, with this package y
 
 Also <a href="http://developers.cafebazaar.ir/fa/docs/">Official Documents</a> are not clear and not complete at all.
 
+## Requirements
+
+- Laravel 5.5 ~ 6.+
+
 ## Installation
 
 You can install the package via composer:
@@ -26,6 +30,7 @@ php artisan vendor:publish
 
 ## Usage
 
+
 Add a redirect route
 
 ``` php
@@ -36,6 +41,17 @@ Route::get('/iap/redirect', function(Illuminate\Http\Request $request) {
 });
 
 ```
+
+Open up <a href="https://pishkhan.cafebazaar.ir/">Cafebazaar developer panel</a> and create a new client with redirect url you specified
+
+Configure `config/laravel-cafebazaar.php`
+
+Then run
+
+```bash
+php artisan Cafebazaar code
+```
+Open up the link and authorize the application
 
 ``` php
 <?php
