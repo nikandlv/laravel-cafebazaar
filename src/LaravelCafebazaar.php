@@ -2,12 +2,13 @@
 
 namespace Nikandlv\LaravelCafebazaar;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class LaravelCafebazaar
 {
     
     function __construct() {
-        $this->getCache();
+        $this->data = $this->getCache();
         $this->updateToken();
     }
 
@@ -16,19 +17,31 @@ class LaravelCafebazaar
     }
 
     function getCache() {
-        $cache = Cache::get('laravel-cafebazaar');
-
+        return Cache::get('laravel-cafebazaar');
     }
 
-    function setCache($config) {
-        Cache::put('laravel-cafebazaar', $config, 60);
+    function setCache($cache) {
+        Cache::put('laravel-cafebazaar', $cache, 60);
     }
+
+    function getCode() {
+        return Cache::get('laravel-cafebazaar-code');
+    }
+
+    function setCode($code) {
+        Cache::put('laravel-cafebazaar-code', $code);
+    }
+    
 
     public function verifyPurchase($package_id, $product_id, $purchase_token) {
         
     }
 
     private function expired() {
+        $this->data->expire = false;
+    }
 
+    public static function handleRedirect(Request $request) {
+        $code = $request->input('code');
     }
 }
