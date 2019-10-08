@@ -44,12 +44,7 @@ class LaravelCafebazaar {
     protected function getCode() {
         return Cache::get('laravel-cafebazaar-code');
     }
-
-    protected function setCode($code) {
-        Cache::forever('laravel-cafebazaar-code', $code);
-    }
     
-
     public function verifyPurchase($package_id, $product_id, $purchase_token) {
         $this->updateToken();
         $data = $this->guzzle->get("api/validate/$package_id/inapp/$product_id/purchases/$purchase_token");
@@ -58,5 +53,8 @@ class LaravelCafebazaar {
 
     public static function handleRedirect(Request $request) {
         $code = $request->input('code');
+        if(!empty($code)) {
+            Cache::forever('laravel-cafebazaar-code', $code);
+        }
     }
 }

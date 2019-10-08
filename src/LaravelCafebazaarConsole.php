@@ -40,10 +40,10 @@ class LaravelCafebazaarConsole extends Command {
     {
         $action = $this->argument('action');
         $client_id = config('laravel-cafebazaar.client_id');
-        $redirect_uri = config('laravel-cafebazaar.redi$redirect_uri');
+        $redirect_uri = config('laravel-cafebazaar.redirect_uri');
         switch($action) {
             case 'code':
-                echo "Visit this and grant access";
+                echo "Visit this and grant access\n";
                 echo "https://pardakht.cafebazaar.ir/devapi/v2/auth/authorize/?response_type=code&access_type=offline&redirect_uri=$redirect_uri&client_id=$client_id\n";
                 break;
         }
