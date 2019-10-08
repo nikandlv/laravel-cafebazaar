@@ -11,6 +11,7 @@ class LaravelCafebazaar {
     function __construct() {
         $this->guzzle = new \GuzzleHttp\Client(["base_uri" => "https://pardakht.cafebazaar.ir/devapi/v2/"]);
         $this->data = $this->getCache();
+        $this->code = $this->getCode();
         $this->updateToken();
     }
 
