@@ -1,11 +1,11 @@
-# Very short description of the package
+# Laravel Cafebazaar API implementation
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nikandlv/laravel-cafebazaar.svg?style=flat-square)](https://packagist.org/packages/nikandlv/laravel-cafebazaar)
 [![Build Status](https://img.shields.io/travis/nikandlv/laravel-cafebazaar/master.svg?style=flat-square)](https://travis-ci.org/nikandlv/laravel-cafebazaar)
 [![Quality Score](https://img.shields.io/scrutinizer/g/nikandlv/laravel-cafebazaar.svg?style=flat-square)](https://scrutinizer-ci.com/g/nikandlv/laravel-cafebazaar)
 [![Total Downloads](https://img.shields.io/packagist/dt/nikandlv/laravel-cafebazaar.svg?style=flat-square)](https://packagist.org/packages/nikandlv/laravel-cafebazaar)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Cafebazaar uses a non standard implementation of `OAuth2.0`, with this package you can use cafebazaar api without all of the headache that it brings
 
 ## Installation
 

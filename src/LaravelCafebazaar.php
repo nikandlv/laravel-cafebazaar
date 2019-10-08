@@ -4,5 +4,20 @@ namespace Nikandlv\LaravelCafebazaar;
 
 class LaravelCafebazaar
 {
-    // Build your next great package.
+    
+    function __construct() {
+        $this->updateToken();
+    }
+
+    function updateToken() {
+
+    }
+
+    public function verifyPurchase($package_id, $product_id, $purchase_token) {
+        
+    }
+
+    private function isExpired() {
+
+    }
 }
