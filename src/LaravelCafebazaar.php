@@ -6,8 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
-class LaravelCafebazaar
-{
+class LaravelCafebazaar {
     
     function __construct() {
         $this->guzzle = new \GuzzleHttp\Client(["base_uri" => "https://pardakht.cafebazaar.ir/devapi/v2/"]);
