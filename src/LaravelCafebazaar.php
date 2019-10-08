@@ -8,12 +8,15 @@ class LaravelCafebazaar
 {
     
     function __construct() {
+        $this->guzzle = new \GuzzleHttp\Client(["base_uri" => "https://pardakht.cafebazaar.ir/devapi/v2"]);
         $this->data = $this->getCache();
         $this->updateToken();
     }
 
     function updateToken() {
-
+        if()
+        $response = $this->guzzle->post("/post");
+        echo $response->getBody();
     }
 
     function getCache() {
@@ -21,7 +24,7 @@ class LaravelCafebazaar
     }
 
     function setCache($cache) {
-        Cache::put('laravel-cafebazaar', $cache, 60);
+        Cache::forever('laravel-cafebazaar', $cache, 60);
     }
 
     function getCode() {
@@ -29,12 +32,12 @@ class LaravelCafebazaar
     }
 
     function setCode($code) {
-        Cache::put('laravel-cafebazaar-code', $code);
+        Cache::forever('laravel-cafebazaar-code', $code);
     }
     
 
     public function verifyPurchase($package_id, $product_id, $purchase_token) {
-        
+        $this->updateToken();
     }
 
     private function expired() {
