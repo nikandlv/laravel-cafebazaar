@@ -2,6 +2,7 @@
 
 namespace Nikandlv\LaravelCafebazaar;
 
+use App\Console\Commands\LaravelCafebazaarConsole;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelCafebazaarServiceProvider extends ServiceProvider
@@ -40,7 +41,7 @@ class LaravelCafebazaarServiceProvider extends ServiceProvider
             ], 'lang');*/
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([LaravelCafebazaarConsole::class]);
         }
     }
 
