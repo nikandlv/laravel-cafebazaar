@@ -86,9 +86,13 @@ class LaravelCafebazaar {
     
     public function verifyPurchase($package_id, $product_id, $purchase_token) {
         $this->updateToken();
-        $response = $this->guzzle->get("api/validate/$package_id/inapp/$product_id/purchases/$purchase_token?access_token=".$this->data->access_token);
-        $data = json_decode($response->getBody()->getContents());
-        return new CafebazaarPurchase($data);
+        try {
+            $response = $this->guzzle->get("api/validate/$package_id/inapp/$product_id/purchases/$purchase_token?access_token=".$this->data->access_token);
+            $data = json_decode($response->getBody()->getContents());
+            return new CafebazaarPurchase($data);
+        } catch(Exception $exception) {
+            return new CafebazaarPurchase(new \stdClass());
+        }
     }
 
     public static function handleRedirect(Request $request) {
